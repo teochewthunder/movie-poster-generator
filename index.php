@@ -165,6 +165,7 @@ if (isset($_POST["btSubmit"]))
 		<script>
 			function useVariables() 
 			{
+				$("#title_and_tagline").attr("style", "margin-top:" + $("#txtSpace_from_top").val() + "px");
 				$("#left, #right").attr("style", "color:" + $("#txtReviews_color").val() + ";background-color: " + $("#txtReviews_bgcolor").val());
 			}
 		</script>
