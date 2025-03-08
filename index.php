@@ -1,17 +1,32 @@
 <?php
-$filecode = "colinkaepernick";
+$filecode = "angelinajolie";
 $filetype = "jpg";
-$line1 = "Believe in something.";
-$line2 = "Even if it means sacrificing everything.";
-$slogan = "Just Do It.";
+
+$space_from_top = "20";
+
+$movie_title = "My Pefect Woman";
+$movie_title_color = "#FFFFFF";
+$movie_title_size = "30";
+
+$movie_tagline = "You just can't beat this";
+$movie_tagline_color = "#FFFFFF";
+$movie_tagline_size = "15";
+
+$movie_starring = "Angelina Jolie";
+$movie_starring_color = "#FFFFFF";
+$movie_starring_size = "10";
+
+$reviews = [];
+$reviews_color = "#FFFFFF";
+$reviews_bgcolor = "#000000";
 
 $strmessage="";
 
 if (isset($_POST["btSubmit"]))
 {
-	$line1 = $_POST["txtLine1"];
-	$line2 = $_POST["txtLine2"];
-	$slogan = $_POST["txtSlogan"];	
+	$movie_title = $_POST["txtMovie_title"];
+	$movie_tagline = $_POST["txtMovie_tagline"];
+	$movie_starring = $_POST["txtMovie_starring"];	
 
 	if (basename($_FILES["flUpload"]["name"]) != "")
 	{
@@ -48,13 +63,15 @@ if (isset($_POST["btSubmit"]))
 	{
 	    $strmessage="No file selected.";
 	}
+
+	//connect to ChatGPT in any case
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Nike Meme Generator</title>
+		<title>Fake Reviews Generator</title>
 
 		<style>
 			#pnlMessage
@@ -74,22 +91,41 @@ if (isset($_POST["btSubmit"]))
 				outline: 0px solid #DDDDDD;
 			}
 
-			#memeContainer
+			label
 			{
-				width: 500px;
+				display: inline-block;
+				font-family: arial;
+				font-size: 12px;
+				width: 10em;
+			}
+
+			#posterContainer
+			{
+				width: 800px;
 				height: 500px;
-				padding: 5px;
 				margin: 5px;
 				float: left;
-				outline: 1px solid #DDDDDD;
+			    text-align: center;
+			}
+
+
+			#left, #right
+			{
+				width: 180px;
+			}
+
+			#middle
+			{
+				width: 380px;
 				background: url(<?php echo "uploads/" . $filecode . "." . $filetype; ?>) center center no-repeat;
 				background-size: cover;
-				font-family: georgia;
-				color: #FFFFFF;
-				font-size: 25px;
-			    -webkit-filter: grayscale(100%);
-			    filter: grayscale(100%);
-			    text-align: center;
+			}
+
+			.overlay
+			{
+				height: 480px;
+				float: left;
+				padding: 10px;
 			}
 
 			@media print 
@@ -99,7 +135,7 @@ if (isset($_POST["btSubmit"]))
 			    	display: none;
 			    }
 
-			    #memeContainer
+			    #posterContainer
 				{
 					margin: 10% auto 0 auto;
 					float: none;
@@ -117,22 +153,60 @@ if (isset($_POST["btSubmit"]))
 	            <input type="file" name="flUpload" id="flUpload">
 	            <input type="hidden" name="hidUploadSize" id="hidUploadSize" value="50000000">
 	            <br /><br />
-	           	<label for="txtLine1">Line 1</label>
-	            <input name="txtLine1" id="txtLine1" maxlength="50" value="<?php echo $line1; ?>" />
+	            <label for="txtSpace_from_top">Space From Top</label>
+	            <input type="range" min="10" max="250" name="txtSpace_from_top" id="txtSpace_from_top" value="<?php echo $space_from_top; ?>" />
 	            <br /><br />
-	           	<label for="txtLine2">Line 2</label>
-	            <input name="txtLine2" id="txtLine2" maxlength="50" value="<?php echo $line2; ?>" />
+	           	<label for="txtMovie_title">Movie Title</label>
+	            <input name="txtMovie_title" id="txtMovie_title" maxlength="50" value="<?php echo $movie_title; ?>" />
+	            <br />
+	            <label for="txtMovie_title_color">Movie Title Color</label>
+	            <input type="color" name="txtMovie_title_color" id="txtMovie_title_color" value="<?php echo $movie_title_color; ?>" />
+	            <br />
+	            <label for="txtMovie_title_size">Movie Title Size</label>
+	            <input type="range" min="10" max="50" name="txtMovie_title_size" id="txtMovie_title_size" value="<?php echo $movie_title_size; ?>" />
 	            <br /><br />
-	           	<label for="txtSlogan">Slogan</label>
-	            <input name="txtSlogan" id="txtSlogan" maxlength="20" value="<?php echo $slogan; ?>" />
+	           	<label for="txtMovie_tagline">Movie Tagline</label>
+	            <input name="txtMovie_tagline" id="txtMovie_tagline" maxlength="50" value="<?php echo $movie_tagline; ?>" />
+	            <br />
+	            <label for="txtMovie_tagline_color">Movie Tagline Color</label>
+	            <input type="color" name="txtMovie_tagline_color" id="txtMovie_tagline_color" value="<?php echo $movie_tagline_color; ?>" />
+	            <br />
+	            <label for="txtMovie_tagline_size">Movie Tagline Size</label>
+	            <input type="range" min="10" max="50" name="txtMovie_tagline_size" id="txtMovie_tagline_size" value="<?php echo $movie_tagline_size; ?>" />
 	            <br /><br />
-	            <input type="submit" name="btSubmit" id="btSubmit" value="Create your Meme!">
+	           	<label for="txtMovie_starring">Starring</label>
+	            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="20" value="<?php echo $movie_starring; ?>" />
+	            <br />
+	            <label for="txtMovie_starring_color">Starring Color</label>
+	            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_tagline_color; ?>" />
+	            <br />
+	            <label for="txtMovie_starring_size">Starring Size</label>
+	            <input type="range" min="10" max="50" name="txtMovie_starring_size" id="txtMovie_starring_size" value="<?php echo $movie_starring_size; ?>" />
+	            <br /><br />
+	            <label for="txtReviews_color">Reviews Color</label>
+	            <input type="color" name="txtReviews_color" id="txtReviews_color" value="<?php echo $reviews_color; ?>" />
+	            <br />
+	            <label for="txtReviews_bgcolor">Reviews Background Color</label>
+	           	<input type="color" name="txtReviews_bgcolor" id="txtReviews_bgcolor" value="<?php echo $reviews_bgcolor; ?>" />
+	            <br /><br />
+	            <input type="submit" name="btSubmit" id="btSubmit" value="Create your Fake Movie Poster!">
 			</form>
         </div>
 
-        <div id="memeContainer">
-        	<p style="margin-top:50%"><?php echo $line1;?><br /><?php echo $line2;?></p>
-        	<p style="margin-top:30%"><img src="nikelogo.png"> <?php echo $slogan;?></p>
+        <div id="posterContainer">
+        	<div id="left" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>"></div>
+        	<div id="middle" class="overlay">
+        		<p id="title_and_tagline" style="margin-top:<?php echo $space_from_top;?>">
+        			<span style="color:<?php echo $movie_title_color;?>;font-size:<?php echo $movie_title_size;?>"><?php echo $movie_title;?></span>
+        			<br />
+        			<span style="color:<?php echo $movie_tagline_color;?>;font-size:<?php echo $movie_tagline_size;?>"><?php echo $movie_tagline;?></span>
+        		</p>
+        		<p id="starring" style="color:<?php echo $movie_starring_color;?>;font-size:<?php echo $movie_starring_size;?>">
+        			<?php echo ($movie_starring == "" ? "" : "starring ");?>
+        			<?php echo $movie_starring;?></span>
+        		</p>
+        	</div>
+        	<div id="right" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>"></div>
         </div>
 	</body>
 </html>
