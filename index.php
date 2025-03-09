@@ -83,6 +83,45 @@ if (isset($_POST["btSubmit"]))
 	$reviews_bgcolor = $_POST["txtReviews_bgcolor"];
 
 	//connect to ChatGPT in any case
+	$key = "xxx";
+	$org = "xxx";
+	$url = 'https://api.openai.com/v1/chat/completions';  
+
+	$headers = [
+	    "Authorization: Bearer " . $key,
+	    "OpenAI-Organization: " . $org, 
+	    "Content-Type: application/json"
+	];
+
+	$messages = [];
+	$obj = [];
+	$obj["role"] = "user";
+	$obj["content"] = "Give me a JSON object with one property. The property should be named 'FakeReviews', and should be an array of ten objects. Each object should have the property 'review', which is a random fictional complimentary about the movie '" . $movie_title . "'" . ($movie_starring == "" ? "" : " or celebrity '" . $movie_starring . "'") .  " (range between three to ten words) sentence in a string, and the property 'critic' which contains the fictional publication for that quote.";
+	$messages[] = $obj;
+		
+	$data = [];
+	$data["model"] = "gpt-3.5-turbo";
+	$data["messages"] = $messages;
+	$data["max_tokens"] = 1000;
+
+	$curl = curl_init($url);
+	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+	$result = curl_exec($curl);
+	if (curl_errno($curl)) {
+	    echo 'Error:' . curl_error($curl);
+	} 
+
+	curl_close($curl);	
+
+	$result = json_decode($result);
+	$content = $result->choices[0]->message->content;
+	$content = json_decode($content);
+
+	$reviews = $content->FakeReviews;	
 }
 ?>
 
@@ -137,6 +176,16 @@ if (isset($_POST["btSubmit"]))
 				width: 380px;
 				background: url(<?php echo "uploads/" . $filecode . "." . $filetype; ?>) center center no-repeat;
 				background-size: cover;
+			}
+
+			#left
+			{
+				text-align: right;
+			}
+
+			#right
+			{
+				text-align: left;
 			}
 
 			.overlay
@@ -221,7 +270,30 @@ if (isset($_POST["btSubmit"]))
         </div>
 
         <div id="posterContainer">
-        	<div id="left" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>"></div>
+        	<div id="left" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>">
+        		<?php
+        		if (count($reviews) == 10) {
+        			for ($i = 0; $i < 5; $i++) 
+        			{
+        		?>
+						<span style="font-size:<?php echo (1.5 - (strlen($reviews[$i]->review) / 10)); ?>em"><b>&ldquo;<?php echo htmlspecialchars($reviews[$i]->review); ?>&rdquo;</b>
+						</span>
+						<br />
+						<small>
+							<i><?php echo $reviews[$i]->critic; ?></i>
+							&nbsp;&#9733;&#9733;&#9733;<?php for ($j = 0; $j <= 1; $j++)
+							{
+								if (rand(1, 2) == 1) echo "&#9733;";
+							}
+							?>										
+						</small>
+						<br />
+						<br />
+				<?php
+        			}
+        		}
+        		?>
+        	</div>
         	<div id="middle" class="overlay">
         		<p id="title_and_tagline" style="margin-top:<?php echo $space_from_top;?>px">
         			<span style="color:<?php echo $movie_title_color;?>;font-size:<?php echo $movie_title_size;?>px"><?php echo $movie_title;?></span>
@@ -233,7 +305,30 @@ if (isset($_POST["btSubmit"]))
         			<?php echo $movie_starring;?></span>
         		</p>
         	</div>
-        	<div id="right" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>"></div>
+        	<div id="right" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>">
+        		<?php
+        		if (count($reviews) == 10) {
+        			for ($i = 5; $i < 10; $i++) 
+        			{
+        		?>
+						<span style="font-size:<?php echo (2 - (strlen($reviews[$i]->review) / 10)); ?>em"><b>&ldquo;<?php echo htmlspecialchars($reviews[$i]->review); ?>&rdquo;</b>
+						</span>
+						<br />
+						<small>
+							<i><?php echo $reviews[$i]->critic; ?></i>
+							&nbsp;&#9733;&#9733;&#9733;<?php for ($j = 0; $j <= 1; $j++)
+							{
+								if (rand(1, 2) == 1) echo "&#9733;";
+							}
+							?>										
+						</small>
+						<br />
+						<br />
+				<?php
+        			}
+        		}
+        		?>
+        	</div>
         </div>
 	</body>
 </html>
