@@ -4,7 +4,7 @@ $filetype = "jpg";
 
 $space_from_top = "20";
 
-$movie_title = "My Pefect Woman";
+$movie_title = "My Perfect Woman";
 $movie_title_color = "#FFFFFF";
 $movie_title_size = "30";
 
@@ -174,8 +174,10 @@ if (isset($_POST["btSubmit"]))
 			#middle
 			{
 				width: 380px;
+				height: 500px;
 				background: url(<?php echo "uploads/" . $filecode . "." . $filetype; ?>) center center no-repeat;
 				background-size: cover;
+				float: left;
 			}
 
 			#left
@@ -188,12 +190,37 @@ if (isset($_POST["btSubmit"]))
 				text-align: left;
 			}
 
-			.overlay
+			.review
 			{
 				height: 480px;
 				float: left;
 				padding: 10px;
+				color: <?php echo $reviews_color;?>;
+				background-color: <?php echo $reviews_bgcolor;?>
 			}
+
+			#title_and_tagline
+			{
+				margin-top: <?php echo $space_from_top;?>px;
+			}
+
+			#movie_title
+			{
+				color: <?php echo $movie_title_color;?>;
+				font-size: <?php echo $movie_title_size;?>px;
+			}
+
+			#movie_tagline
+			{
+				 color: <?php echo $movie_tagline_color;?>;
+				 font-size: <?php echo $movie_tagline_size;?>px;
+			}
+
+			#movie_starring
+			{
+				color: <?php echo $movie_starring_color;?>;
+				font-size: <?php echo $movie_starring_size;?>px;
+			}	
 
 			@media print 
 			{
@@ -215,7 +242,10 @@ if (isset($_POST["btSubmit"]))
 			function useVariables() 
 			{
 				$("#title_and_tagline").attr("style", "margin-top:" + $("#txtSpace_from_top").val() + "px");
-				$("#left, #right").attr("style", "color:" + $("#txtReviews_color").val() + ";background-color: " + $("#txtReviews_bgcolor").val());
+				$(".review").attr("style", "color:" + $("#txtReviews_color").val() + ";background-color: " + $("#txtReviews_bgcolor").val());
+				$("#movie_title").attr("style", "color:" + $("#txtMovie_title_color").val() + ";font-size: " + $("#txtMovie_title_size").val());
+				$("#movie_tagline").attr("style", "color:" + $("#txtMovie_tagline_color").val() + ";font-size: " + $("#txtMovie_tagline_size").val());
+				$("#movie_starring").attr("style", "color:" + $("#txtMovie_starring_color").val() + ";font-size: " + $("#txtMovie_starring_size").val());
 			}
 		</script>
 	</head>
@@ -230,47 +260,59 @@ if (isset($_POST["btSubmit"]))
 	            <input type="hidden" name="hidUploadSize" id="hidUploadSize" value="50000000">
 	            <br /><br />
 	            <label for="txtSpace_from_top">Space From Top</label>
-	            <input type="range" min="10" max="250" name="txtSpace_from_top" id="txtSpace_from_top" value="<?php echo $space_from_top; ?>" oninput="useVariables()" />
+	            <input type="range" min="10" max="400" name="txtSpace_from_top" id="txtSpace_from_top" value="<?php echo $space_from_top; ?>" oninput="useVariables()" />
 	            <br /><br />
-	           	<label for="txtMovie_title">Movie Title</label>
-	            <input name="txtMovie_title" id="txtMovie_title" maxlength="50" value="<?php echo $movie_title; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_title_color">Movie Title Color</label>
-	            <input type="color" name="txtMovie_title_color" id="txtMovie_title_color" value="<?php echo $movie_title_color; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_title_size">Movie Title Size</label>
-	            <input type="range" min="10" max="50" name="txtMovie_title_size" id="txtMovie_title_size" value="<?php echo $movie_title_size; ?>" oninput="useVariables()" />
-	            <br /><br />
-	           	<label for="txtMovie_tagline">Movie Tagline</label>
-	            <input name="txtMovie_tagline" id="txtMovie_tagline" maxlength="50" value="<?php echo $movie_tagline; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_tagline_color">Movie Tagline Color</label>
-	            <input type="color" name="txtMovie_tagline_color" id="txtMovie_tagline_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_tagline_size">Movie Tagline Size</label>
-	            <input type="range" min="10" max="50" name="txtMovie_tagline_size" id="txtMovie_tagline_size" value="<?php echo $movie_tagline_size; ?>" oninput="useVariables()" />
-	            <br /><br />
-	           	<label for="txtMovie_starring">Starring</label>
-	            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="20" value="<?php echo $movie_starring; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_starring_color">Starring Color</label>
-	            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtMovie_starring_size">Starring Size</label>
-	            <input type="range" min="10" max="50" name="txtMovie_starring_size" id="txtMovie_starring_size" value="<?php echo $movie_starring_size; ?>" oninput="useVariables()" />
-	            <br /><br />
-	            <label for="txtReviews_color">Reviews Color</label>
-	            <input type="color" name="txtReviews_color" id="txtReviews_color" value="<?php echo $reviews_color; ?>" oninput="useVariables()" />
-	            <br />
-	            <label for="txtReviews_bgcolor">Reviews Background Color</label>
-	           	<input type="color" name="txtReviews_bgcolor" id="txtReviews_bgcolor" value="<?php echo $reviews_bgcolor; ?>" oninput="useVariables()" />
-	            <br /><br />
-	            <input type="submit" name="btSubmit" id="btSubmit" value="Create your Fake Movie Poster!">
+	            <fieldset>
+	            	<legend>Movie Title</legend>
+		           	<label for="txtMovie_title">Text</label>
+		            <input name="txtMovie_title" id="txtMovie_title" maxlength="50" value="<?php echo $movie_title; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_title_color">Color</label>
+		            <input type="color" name="txtMovie_title_color" id="txtMovie_title_color" value="<?php echo $movie_title_color; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_title_size">Size</label>
+		            <input type="range" min="10" max="50" name="txtMovie_title_size" id="txtMovie_title_size" value="<?php echo $movie_title_size; ?>" oninput="useVariables()" />	            	
+	            </fieldset>
+
+	            <fieldset>
+	            	<legend>Movie Tagline</legend>
+		           	<label for="txtMovie_tagline">Text</label>
+		            <input name="txtMovie_tagline" id="txtMovie_tagline" maxlength="50" value="<?php echo $movie_tagline; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_tagline_color">Color</label>
+		            <input type="color" name="txtMovie_tagline_color" id="txtMovie_tagline_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_tagline_size">Size</label>
+		            <input type="range" min="10" max="50" name="txtMovie_tagline_size" id="txtMovie_tagline_size" value="<?php echo $movie_tagline_size; ?>" oninput="useVariables()" />
+	            </fieldset>
+
+	            <fieldset>
+	            	<legend>Starring</legend>
+		            <label for="txtMovie_starring">Text</label>
+		            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="20" value="<?php echo $movie_starring; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_starring_color">Color</label>
+		            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtMovie_starring_size">Size</label>
+		            <input type="range" min="10" max="50" name="txtMovie_starring_size" id="txtMovie_starring_size" value="<?php echo $movie_starring_size; ?>" oninput="useVariables()" />
+	            </fieldset>	           	
+
+	            <fieldset>
+	            	<legend>Reviews</legend>
+		            <label for="txtReviews_color">Color</label>
+		            <input type="color" name="txtReviews_color" id="txtReviews_color" value="<?php echo $reviews_color; ?>" oninput="useVariables()" />
+		            <br />
+		            <label for="txtReviews_bgcolor">Background Color</label>
+		           	<input type="color" name="txtReviews_bgcolor" id="txtReviews_bgcolor" value="<?php echo $reviews_bgcolor; ?>" oninput="useVariables()" />
+	            </fieldset>
+
+	            <input type="submit" name="btSubmit" id="btSubmit" value="Create your Movie Poster!">
 			</form>
         </div>
 
         <div id="posterContainer">
-        	<div id="left" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>">
+        	<div id="left" class="review">
         		<?php
         		if (count($reviews) == 10) {
         			for ($i = 0; $i < 5; $i++) 
@@ -294,18 +336,18 @@ if (isset($_POST["btSubmit"]))
         		}
         		?>
         	</div>
-        	<div id="middle" class="overlay">
-        		<p id="title_and_tagline" style="margin-top:<?php echo $space_from_top;?>px">
-        			<span style="color:<?php echo $movie_title_color;?>;font-size:<?php echo $movie_title_size;?>px"><?php echo $movie_title;?></span>
+        	<div id="middle">
+        		<p id="title_and_tagline">
+        			<span id="movie_title"><?php echo $movie_title;?></span>
         			<br />
-        			<span style="color:<?php echo $movie_tagline_color;?>;font-size:<?php echo $movie_tagline_size;?>px"><?php echo $movie_tagline;?></span>
+        			<span id="movie_tagline"><?php echo $movie_tagline;?></span>
         		</p>
-        		<p id="starring" style="color:<?php echo $movie_starring_color;?>;font-size:<?php echo $movie_starring_size;?>px">
+        		<p id="movie_starring">
         			<?php echo ($movie_starring == "" ? "" : "starring ");?>
         			<?php echo $movie_starring;?></span>
         		</p>
         	</div>
-        	<div id="right" class="overlay" style="color:<?php echo $reviews_color;?>;background-color:<?php echo $reviews_bgcolor;?>">
+        	<div id="right" class="review">
         		<?php
         		if (count($reviews) == 10) {
         			for ($i = 5; $i < 10; $i++) 
