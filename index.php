@@ -4,11 +4,11 @@ $filetype = "jpg";
 
 $space_from_top = "20";
 
-$movie_title = "My Perfect Woman";
+$movie_title = "Modern-day Maleficent";
 $movie_title_color = "#FFFFFF";
 $movie_title_size = "30";
 
-$movie_tagline = "You just can't beat this";
+$movie_tagline = "A re-imagining of the original tale of darkness";
 $movie_tagline_color = "#FFFFFF";
 $movie_tagline_size = "15";
 
@@ -128,7 +128,7 @@ if (isset($_POST["btSubmit"]))
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Fake Reviews Generator</title>
+		<title>Movie Poster Generator</title>
 
 		<style>
 			#pnlMessage
@@ -154,6 +154,13 @@ if (isset($_POST["btSubmit"]))
 				font-family: arial;
 				font-size: 12px;
 				width: 10em;
+			}
+
+			#btSubmit
+			{
+				width: 15em;
+				margin-top: 1em;
+				float: right;
 			}
 
 			#posterContainer
@@ -196,7 +203,8 @@ if (isset($_POST["btSubmit"]))
 				float: left;
 				padding: 10px;
 				color: <?php echo $reviews_color;?>;
-				background-color: <?php echo $reviews_bgcolor;?>
+				background-color: <?php echo $reviews_bgcolor;?>;
+				font-family: Georgia;
 			}
 
 			#title_and_tagline
@@ -208,18 +216,22 @@ if (isset($_POST["btSubmit"]))
 			{
 				color: <?php echo $movie_title_color;?>;
 				font-size: <?php echo $movie_title_size;?>px;
+				font-weight: bold;
+				font-family: Impact, Verdana;
 			}
 
 			#movie_tagline
 			{
 				 color: <?php echo $movie_tagline_color;?>;
 				 font-size: <?php echo $movie_tagline_size;?>px;
+				 font-family: Arial, Helvetica, Verdana;
 			}
 
 			#movie_starring
 			{
 				color: <?php echo $movie_starring_color;?>;
 				font-size: <?php echo $movie_starring_size;?>px;
+				font-family: Arial, Helvetica, Verdana;
 			}	
 
 			@media print 
@@ -241,11 +253,23 @@ if (isset($_POST["btSubmit"]))
 		<script>
 			function useVariables() 
 			{
-				$("#title_and_tagline").attr("style", "margin-top:" + $("#txtSpace_from_top").val() + "px");
-				$(".review").attr("style", "color:" + $("#txtReviews_color").val() + ";background-color: " + $("#txtReviews_bgcolor").val());
-				$("#movie_title").attr("style", "color:" + $("#txtMovie_title_color").val() + ";font-size: " + $("#txtMovie_title_size").val());
-				$("#movie_tagline").attr("style", "color:" + $("#txtMovie_tagline_color").val() + ";font-size: " + $("#txtMovie_tagline_size").val());
-				$("#movie_starring").attr("style", "color:" + $("#txtMovie_starring_color").val() + ";font-size: " + $("#txtMovie_starring_size").val());
+				$("#title_and_tagline")
+				.attr("style", "margin-top:" + $("#txtSpace_from_top").val() + "px");
+
+				$(".review")
+				.attr("style", "color:" + $("#txtReviews_color").val() + ";background-color: " + $("#txtReviews_bgcolor").val());
+
+				$("#movie_title")
+				.attr("style", "color:" + $("#txtMovie_title_color").val() + ";font-size: " + $("#txtMovie_title_size").val() + "px")
+				.html($("#txtMovie_title").val());
+
+				$("#movie_tagline")
+				.attr("style", "color:" + $("#txtMovie_tagline_color").val() + ";font-size: " + $("#txtMovie_tagline_size").val() + "px")
+				.html($("#txtMovie_tagline").val());
+
+				$("#movie_starring")
+				.attr("style", "color:" + $("#txtMovie_starring_color").val() + ";font-size: " + $("#txtMovie_starring_size").val() + "px")
+				.html(($("#txtMovie_starring").val() == "" ? "" : "starring " + $("#txtMovie_starring").val()));
 			}
 		</script>
 	</head>
@@ -265,7 +289,7 @@ if (isset($_POST["btSubmit"]))
 	            <fieldset>
 	            	<legend>Movie Title</legend>
 		           	<label for="txtMovie_title">Text</label>
-		            <input name="txtMovie_title" id="txtMovie_title" maxlength="50" value="<?php echo $movie_title; ?>" oninput="useVariables()" />
+		            <input name="txtMovie_title" id="txtMovie_title" maxlength="20" value="<?php echo $movie_title; ?>" oninput="useVariables()" />
 		            <br />
 		            <label for="txtMovie_title_color">Color</label>
 		            <input type="color" name="txtMovie_title_color" id="txtMovie_title_color" value="<?php echo $movie_title_color; ?>" oninput="useVariables()" />
@@ -289,7 +313,7 @@ if (isset($_POST["btSubmit"]))
 	            <fieldset>
 	            	<legend>Starring</legend>
 		            <label for="txtMovie_starring">Text</label>
-		            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="20" value="<?php echo $movie_starring; ?>" oninput="useVariables()" />
+		            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="100" value="<?php echo $movie_starring; ?>" oninput="useVariables()" />
 		            <br />
 		            <label for="txtMovie_starring_color">Color</label>
 		            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
@@ -307,7 +331,7 @@ if (isset($_POST["btSubmit"]))
 		           	<input type="color" name="txtReviews_bgcolor" id="txtReviews_bgcolor" value="<?php echo $reviews_bgcolor; ?>" oninput="useVariables()" />
 	            </fieldset>
 
-	            <input type="submit" name="btSubmit" id="btSubmit" value="Create your Movie Poster!">
+	            <button name="btSubmit" id="btSubmit">Create your Movie Poster!</button>
 			</form>
         </div>
 
