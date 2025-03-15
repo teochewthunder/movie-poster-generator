@@ -362,7 +362,7 @@ if (isset($_POST["btSubmit"]))
         		</p>
         		<p id="movie_starring">
         			<?php echo ($movie_starring == "" ? "" : "starring ");?>
-        			<?php echo $movie_starring;?></span>
+        			<?php echo $movie_starring;?>
         		</p>
         	</div>
         	<div id="right" class="review">
