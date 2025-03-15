@@ -82,7 +82,6 @@ if (isset($_POST["btSubmit"]))
 	$reviews_color = $_POST["txtReviews_color"];
 	$reviews_bgcolor = $_POST["txtReviews_bgcolor"];
 
-	//connect to ChatGPT in any case
 	$key = "xxx";
 	$org = "xxx";
 	$url = 'https://api.openai.com/v1/chat/completions';  
@@ -172,12 +171,6 @@ if (isset($_POST["btSubmit"]))
 			    text-align: center;
 			}
 
-
-			#left, #right
-			{
-				width: 180px;
-			}
-
 			#middle
 			{
 				width: 380px;
@@ -199,6 +192,7 @@ if (isset($_POST["btSubmit"]))
 
 			.review
 			{
+				width: 180px;
 				height: 480px;
 				float: left;
 				padding: 10px;
