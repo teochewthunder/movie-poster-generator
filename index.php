@@ -83,7 +83,7 @@ if (isset($_POST["btSubmit"]))
 	$reviews_bgcolor = $_POST["txtReviews_bgcolor"];
 
 	$key = "xxx";
-	$org = "xxx";
+	$org = "org-xxx";
 	$url = 'https://api.openai.com/v1/chat/completions';  
 
 	$headers = [
@@ -310,7 +310,7 @@ if (isset($_POST["btSubmit"]))
 		            <input name="txtMovie_starring" id="txtMovie_starring" maxlength="100" value="<?php echo $movie_starring; ?>" oninput="useVariables()" />
 		            <br />
 		            <label for="txtMovie_starring_color">Color</label>
-		            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_tagline_color; ?>" oninput="useVariables()" />
+		            <input type="color" name="txtMovie_starring_color" id="txtMovie_starring_color" value="<?php echo $movie_starring_color; ?>" oninput="useVariables()" />
 		            <br />
 		            <label for="txtMovie_starring_size">Size</label>
 		            <input type="range" min="10" max="50" name="txtMovie_starring_size" id="txtMovie_starring_size" value="<?php echo $movie_starring_size; ?>" oninput="useVariables()" />
