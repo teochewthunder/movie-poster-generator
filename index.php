@@ -110,7 +110,8 @@ if (isset($_POST["btSubmit"]))
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
 	$result = curl_exec($curl);
-	if (curl_errno($curl)) {
+	if (curl_errno($curl)) 
+	{
 	    echo 'Error:' . curl_error($curl);
 	} 
 
@@ -332,7 +333,8 @@ if (isset($_POST["btSubmit"]))
         <div id="posterContainer">
         	<div id="left" class="review">
         		<?php
-        		if (count($reviews) == 10) {
+        		if (count($reviews) == 10) 
+        		{
         			for ($i = 0; $i < 5; $i++) 
         			{
         		?>
@@ -341,7 +343,8 @@ if (isset($_POST["btSubmit"]))
 						<br />
 						<small>
 							<i><?php echo $reviews[$i]->critic; ?></i>
-							&nbsp;&#9733;&#9733;&#9733;<?php for ($j = 0; $j <= 1; $j++)
+							&nbsp;&#9733;&#9733;&#9733;
+							<?php for ($j = 0; $j <= 1; $j++)
 							{
 								if (rand(1, 2) == 1) echo "&#9733;";
 							}
@@ -367,7 +370,8 @@ if (isset($_POST["btSubmit"]))
         	</div>
         	<div id="right" class="review">
         		<?php
-        		if (count($reviews) == 10) {
+        		if (count($reviews) == 10) 
+        		{
         			for ($i = 5; $i < 10; $i++) 
         			{
         		?>
@@ -376,7 +380,8 @@ if (isset($_POST["btSubmit"]))
 						<br />
 						<small>
 							<i><?php echo $reviews[$i]->critic; ?></i>
-							&nbsp;&#9733;&#9733;&#9733;<?php for ($j = 0; $j <= 1; $j++)
+							&nbsp;&#9733;&#9733;&#9733;
+							<?php for ($j = 0; $j <= 1; $j++)
 							{
 								if (rand(1, 2) == 1) echo "&#9733;";
 							}
